@@ -9,15 +9,34 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _ReciperCard(context),
-          _ReciperCard(context),
-          _ReciperCard(context),
+          _reciperCard(context),
+          _reciperCard(context),
+          _reciperCard(context),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange,
+        child: const Icon(Icons.add),
+        onPressed: () => _showBottom(context),
       ),
     );
   }
 
-  Widget _ReciperCard(BuildContext context) {
+  Future<void> _showBottom(BuildContext context) {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 500,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
+          child: Text("Hola"),
+        );
+      },
+    );
+  }
+
+  Widget _reciperCard(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -64,6 +83,52 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class RecipeForm extends StatelessWidget {
+  const RecipeForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Form(
+          // key: _formKey,
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Add New Recipe",
+            style: TextStyle(
+              color: Colors.orange,
+              fontSize: 24,
+            ),
+          ),
+          const SizedBox(height: 16),
+          _buildTextField(label: "Recipe Name"),
+        ],
+      )),
+    );
+  }
+
+  Widget _buildTextField({required String label}) {
+    return TextFormField(
+      decoration: InputDecoration(
+          labelText: label,
+          labelStyle: const TextStyle(
+            fontFamily: "Quicksand",
+            color: Colors.orange,
+          ),
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.orange, width: 1),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          )),
     );
   }
 }
