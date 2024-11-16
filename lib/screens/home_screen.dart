@@ -11,10 +11,19 @@ class HomeScreen extends StatelessWidget {
     // Android 10.0.2.2
     // IOS 127.0.0.1
     final url = Uri.parse("http://10.0.2.2/recipes");
-    final response = await http.get(url);
-    final data = jsonDecode(response.body);
-
-    return data["recipes"];
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data["recipes"];
+      } else {
+        print("Error ${response.statusCode}");
+        return [];
+      }
+    } catch (e) {
+      print("Error $e");
+      return [];
+    }
   }
 
   @override
@@ -25,12 +34,18 @@ class HomeScreen extends StatelessWidget {
         builder: (context, snapshot) {
           final recipes = snapshot.data ?? [];
 
-          return ListView.builder(
-            itemCount: recipes.length,
-            itemBuilder: (context, index) {
-              return _reciperCard(context, recipes[index]);
-            },
-          );
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text("No recipes found"));
+          } else {
+            return ListView.builder(
+              itemCount: recipes.length,
+              itemBuilder: (context, index) {
+                return _reciperCard(context, recipes[index]);
+              },
+            );
+          }
         },
       ),
       floatingActionButton: FloatingActionButton(
