@@ -30,14 +30,13 @@ class HomeScreen extends StatelessWidget {
               Container(
                 height: 125,
                 width: 100,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  color: Colors.orange,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: Image.network(
+                    "https://static.platzi.com/media/uploads/flutter_lasana_b894f1aee1.jpg",
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                //child: ClipRRect(
-                //  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                //  child: Container(),
-                //),
               ),
               const SizedBox(width: 26),
               Column(
