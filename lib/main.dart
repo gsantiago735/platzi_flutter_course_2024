@@ -10,11 +10,25 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: "Hola Mundo",
+      home: RecipeBook(),
+    );
+  }
+}
+
+class RecipeBook extends StatelessWidget {
+  const RecipeBook({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.orange,
+      appBar: AppBar(
+          title: const Text(
+        "Recipe Book",
+        style: TextStyle(color: Colors.white),
+      )),
     );
   }
 }
