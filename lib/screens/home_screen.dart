@@ -6,7 +6,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _ReciperCard(context),
+          _ReciperCard(context),
+          _ReciperCard(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _ReciperCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
         height: 125,
         width: MediaQuery.of(context).size.width,
         child: Card(
@@ -16,21 +30,34 @@ class HomeScreen extends StatelessWidget {
               Container(
                 height: 125,
                 width: 100,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Container(),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  color: Colors.orange,
                 ),
+                //child: ClipRRect(
+                //  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                //  child: Container(),
+                //),
               ),
               const SizedBox(width: 26),
               Column(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Comida"),
-                  const Text("Autor Nombre"),
+                  const Text(
+                    "Comida",
+                    style: TextStyle(fontSize: 16, fontFamily: "Quicksand"),
+                  ),
+                  const SizedBox(height: 4),
                   Container(
                     height: 2,
                     width: 75,
                     color: Colors.orange,
+                  ),
+                  const Text(
+                    "Autor Nombre",
+                    style: TextStyle(fontSize: 16, fontFamily: "Quicksand"),
                   ),
                 ],
               )
