@@ -92,30 +92,115 @@ class RecipeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+
+    final recipeName = TextEditingController();
+    final recipeAuthor = TextEditingController();
+    final recipeUrl = TextEditingController();
+    final recipeDescription = TextEditingController();
+
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Form(
-          // key: _formKey,
+          key: formKey,
           child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Add New Recipe",
-            style: TextStyle(
-              color: Colors.orange,
-              fontSize: 24,
-            ),
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(label: "Recipe Name"),
-        ],
-      )),
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Add New Recipe",
+                style: TextStyle(
+                  color: Colors.orange,
+                  fontSize: 24,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: recipeName,
+                label: "Recipe Name",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter the name recipe.";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: recipeAuthor,
+                label: "Author",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter the author.";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: recipeUrl,
+                label: "Image url",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter the url.";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildTextField(
+                controller: recipeDescription,
+                label: "Description",
+                maxLines: 4,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter the description.";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  child: const Text(
+                    "Save Recipe",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 
-  Widget _buildTextField({required String label}) {
+  Widget _buildTextField(
+      {required TextEditingController controller,
+      required String label,
+      required String? Function(String?) validator,
+      int maxLines = 1}) {
     return TextFormField(
+      controller: controller,
+      validator: validator,
+      maxLines: maxLines,
       decoration: InputDecoration(
           labelText: label,
           labelStyle: const TextStyle(
