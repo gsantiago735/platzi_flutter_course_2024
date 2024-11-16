@@ -8,7 +8,9 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   Future<List<dynamic>> fetchRecipes() async {
-    final url = Uri.parse("http://localhost:12346/recipes");
+    // Android 10.0.2.2
+    // IOS 127.0.0.1
+    final url = Uri.parse("http://10.0.2.2/recipes");
     final response = await http.get(url);
     final data = jsonDecode(response.body);
 
@@ -17,16 +19,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    fetchRecipes();
-
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _reciperCard(context),
-          _reciperCard(context),
-          _reciperCard(context),
-        ],
+      body: FutureBuilder<List<dynamic>>(
+        future: fetchRecipes(),
+        builder: (context, snapshot) {
+          final recipes = snapshot.data ?? [];
+
+          return ListView.builder(
+            itemCount: recipes.length,
+            itemBuilder: (context, index) {
+              return _reciperCard(context, recipes[index]);
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
@@ -44,19 +49,19 @@ class HomeScreen extends StatelessWidget {
           height: 500,
           width: MediaQuery.of(context).size.width,
           color: Colors.white,
-          child: Text("Hola"),
+          child: const Text("Hola"),
         );
       },
     );
   }
 
-  Widget _reciperCard(BuildContext context) {
+  Widget _reciperCard(BuildContext context, dynamic recipe) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const RecipeDetail(recipeName: "Nombre"),
+              builder: (context) => RecipeDetail(recipeName: recipe["name"]),
             ));
       },
       child: Padding(
@@ -74,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: Image.network(
-                      "https://static.platzi.com/media/uploads/flutter_lasana_b894f1aee1.jpg",
+                      recipe["image_link"],
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -85,9 +90,10 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Comida",
-                      style: TextStyle(fontSize: 16, fontFamily: "Quicksand"),
+                    Text(
+                      recipe["name"],
+                      style: const TextStyle(
+                          fontSize: 16, fontFamily: "Quicksand"),
                     ),
                     const SizedBox(height: 4),
                     Container(
@@ -95,9 +101,10 @@ class HomeScreen extends StatelessWidget {
                       width: 75,
                       color: Colors.orange,
                     ),
-                    const Text(
-                      "Autor Nombre",
-                      style: TextStyle(fontSize: 16, fontFamily: "Quicksand"),
+                    Text(
+                      recipe["author"],
+                      style: const TextStyle(
+                          fontSize: 16, fontFamily: "Quicksand"),
                     ),
                   ],
                 )
