@@ -1,3 +1,3 @@
 # recipe_book
 
-A new Flutter project.
+Curso Inicial de Flutter (Platzi 2024).
