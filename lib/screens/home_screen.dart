@@ -1,11 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:recipe_book/screens/recipe_detail.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  Future<List<dynamic>> fetchRecipes() async {
+    final url = Uri.parse("http://localhost:12346/recipes");
+    final response = await http.get(url);
+    final data = jsonDecode(response.body);
+
+    return data["recipes"];
+  }
+
   @override
   Widget build(BuildContext context) {
+    fetchRecipes();
+
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.min,
