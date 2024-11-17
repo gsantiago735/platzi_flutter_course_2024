@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:recipe_book/screens/home_screen.dart';
 import 'package:recipe_book/screens/favorites_screen.dart';
 import 'package:recipe_book/providers/recipes_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,6 +21,12 @@ class MainApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
         title: "Hola Mundo",
         home: RecipeBook(),
       ),
