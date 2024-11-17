@@ -54,6 +54,22 @@ class _RecipeDetailState extends State<RecipeDetail> {
           )
         ],
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.network(widget.recipesData.imageLink),
+            const SizedBox(height: 8),
+            Text(widget.recipesData.name),
+            const SizedBox(height: 8),
+            Text("by ${widget.recipesData.author}"),
+            const SizedBox(height: 8),
+            const Text("Recipe steps:"),
+            for (var step in widget.recipesData.recipeSteps) Text("- $step"),
+          ],
+        ),
+      ),
     );
   }
 }

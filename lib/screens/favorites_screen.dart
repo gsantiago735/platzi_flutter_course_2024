@@ -47,6 +47,7 @@ class FavoriteRecipesCard extends StatelessWidget {
       child: Card(
         color: Colors.white,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(recipe.name),
             Text(recipe.author),
