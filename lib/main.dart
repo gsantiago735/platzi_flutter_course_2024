@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_book/providers/recipes_provider.dart';
 import 'package:recipe_book/screens/home_screen.dart';
+import 'package:recipe_book/screens/favorites_screen.dart';
+import 'package:recipe_book/providers/recipes_provider.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,9 +15,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => RecipesProvider(),
-        ),
+        ChangeNotifierProvider(create: (context) => RecipesProvider()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -46,14 +45,13 @@ class RecipeBook extends StatelessWidget {
               labelColor: Colors.white,
               unselectedLabelColor: Colors.white,
               tabs: [
-                Tab(
-                  icon: Icon(Icons.home),
-                  text: "Home",
-                )
+                Tab(icon: Icon(Icons.home), text: "Home"),
+                Tab(icon: Icon(Icons.home), text: "Favorites"),
               ]),
         ),
         body: const TabBarView(children: [
           HomeScreen(),
+          FavoritesScreen(),
         ]),
       ),
     );
