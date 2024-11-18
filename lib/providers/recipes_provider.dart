@@ -22,11 +22,11 @@ class RecipesProvider extends ChangeNotifier {
         recipes = List<RecipeModel>.from(
             data["recipes"].map((x) => RecipeModel.fromJson(x)));
       } else {
-        print("Error ${response.statusCode}");
+        //print("Error ${response.statusCode}");
         recipes = [];
       }
     } catch (e) {
-      print("Error $e");
+      //print("Error $e");
       recipes = [];
     } finally {
       isLoading = false;
@@ -54,7 +54,7 @@ class RecipesProvider extends ChangeNotifier {
         throw Exception("Failed to update favorite recipes.");
       }
     } catch (e) {
-      print("Error updating favorite status $e.");
+      //print("Error updating favorite status $e.");
     }
   }
 }

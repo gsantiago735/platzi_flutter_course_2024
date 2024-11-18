@@ -53,13 +53,9 @@ class FavoriteRecipesCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                child: Image.network(
-                  recipe.imageLink,
-                  fit: BoxFit.fill,
-                ),
+              Image.network(
+                recipe.imageLink,
+                fit: BoxFit.fill,
               ),
               Text(
                 recipe.name,

@@ -64,14 +64,14 @@ class HomeScreen extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
+        child: SizedBox(
           height: 125,
           width: MediaQuery.of(context).size.width,
           child: Card(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                SizedBox(
                   height: 125,
                   width: 100,
                   child: ClipRRect(
